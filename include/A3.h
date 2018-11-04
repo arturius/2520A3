@@ -9,6 +9,7 @@
 #include<string.h>
 #include<stdlib.h>
 
+
 #ifndef A1_H
 #define A1_H
 
@@ -32,9 +33,8 @@ struct lnkdLstVarStruct{
 };
 //functions
 
-double stringToDouble (char string[5]);
 
-treeNode *stringParser (char *string);
+treeNode * stringParser (char *string);
 
 void printPreOrder (treeNode *node);
 void printPostOrder (treeNode *node);
@@ -54,6 +54,12 @@ void createVarLst (treeNode *tree,varLst *list);
 
 void deleteTree (treeNode *node);
 void deleteList (varLst **list);
+
+/*Question 2 functions*/
+void downHeap(int heap[20][10],int parentIndex);
+int compare(int heap[20][10], int index1, int index2);
+void switchNodes(int heap[20][10],int index1, int index2);
+
 #endif
 
   
