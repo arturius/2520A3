@@ -18,8 +18,6 @@ to change to binary min heap reverse the less than and greater than signs for th
 
 
 References:
-For Q1:
-
 For Q2:
 Used https://en.wikipedia.org/wiki/Binary_heap for the finding of a parent and child formulas with a given index in an array based heap
 
