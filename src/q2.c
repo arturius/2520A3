@@ -42,7 +42,7 @@ int main(){
             }
             printf("%d,",values[i][j]);
         }
-        printf(":Key is %d\n", show);
+        printf("\n");
         show =0;
     }
     return 0;

@@ -7,7 +7,7 @@
 #include"A3.h"
 
 int main(int argc, char **argv){
-    char test[] ="(x1*(7.45-(x2/2.03)))";
+    //char test[] ="(x1*(7.45-(x2/2.03)))";
     //char test[] ="(((x1+5.12)*(x2-7.68))/3)";
     char userVar[5];
     double userVal =0.0;
@@ -98,11 +98,11 @@ treeNode *stringParser (char *string){
                     }
                 break;
             /* If its an open bracket creates a new node
-             * Will create the node in which ever node is empty with it prefering leftBranch
+             * Will create the node in which ever node is empty with it prefering leftBranch and move shuttle down
              */
             case '(':
                 if (!shuttle) {
-                    printf("Changing head:");
+                 //   printf("Changing head:");
                     shuttle = newTreeNode("^");
                     head = shuttle;
                 }else {
@@ -120,7 +120,7 @@ treeNode *stringParser (char *string){
                 }
                 break;
             /* Checks if right is empty if it is creates a new node
-             *
+             * moves shuttle up if a valid parent exits
              */
             case ')':
                 if (!shuttle->rightBranch){
@@ -131,7 +131,7 @@ treeNode *stringParser (char *string){
 
                 }
                 if (!shuttle->parent){
-                    printf("Top reached\n");
+                    //printf("Top reached\n");
 
                 }else{
                     shuttle = shuttle->parent;
@@ -143,8 +143,8 @@ treeNode *stringParser (char *string){
                 strcat(holding,temp);
         }
 
-    printInOrder(head);
-    printf("\n");
+    //printInOrder(head);
+    //printf("\n");
     }
     return head;
 }
@@ -169,11 +169,15 @@ void printPostOrder (treeNode *node){
 }
 void printInOrder (treeNode *node){
     if (node){
-        printf("(");
+        if ((node->leftBranch)&&(node->rightBranch)) {
+            printf("(");
+        }
         printInOrder (node->leftBranch);
         printf("%s",node->value);
         printInOrder (node->rightBranch);
-        printf(")");
+        if ((node->leftBranch)&&(node->rightBranch)) {
+            printf(")");
+        }
     }else{
         return;
     }
@@ -244,7 +248,6 @@ double calculate (treeNode *current, varLst **list){
     double hold;
     double var1;
     double var2;
-    printf("Current cal Node %p\n",current);
     if (current){
         if (!(current->leftBranch && current->rightBranch)){
             if(strcmp(current->value,"x0")>0){//checking to see if value is a variable
@@ -269,6 +272,7 @@ double calculate (treeNode *current, varLst **list){
                 hold = var1*var2;
                 return hold;
             }else if(strcmp(current->value,"/")==0){
+                //divide by zero handling
                 if (calculate(current->rightBranch,list) != 0){
                     var1 = calculate(current->leftBranch,list);
                     var2 = calculate(current->rightBranch,list);
@@ -285,6 +289,7 @@ double calculate (treeNode *current, varLst **list){
     }else{
         return 0.0;
     }
+    return 0.0;
 }
 
 treeNode *newTreeNode (char value[5]){
@@ -310,7 +315,7 @@ void createVarLst (treeNode *tree, varLst *list){
 
 
         if(strcmp(tree->value,"x0")>0){
-            printf("var: %s\n",tree->value);
+            //printf("var: %s\n",tree->value);
             temp = newVarLst(0.0,tree->value);
             temp->next = list->next;
             list->next = temp;
